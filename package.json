@@ -1,0 +1,33 @@
+{
+  "name": "npm-audit-export",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:utils": "tsc",
+    "build:ui": "vite-react-ssg build",
+    "watch:utils": "tsc --watch",
+    "watch:ui": "vite-react-ssg dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gustavo0197/npm-audit-export.git"
+  },
+  "author": "Gustavo Velazquez",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/gustavo0197/npm-audit-export/issues"
+  },
+  "homepage": "https://github.com/gustavo0197/npm-audit-export#readme",
+  "description": "",
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "@types/react-dom": "^19.2.3",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  }
+}

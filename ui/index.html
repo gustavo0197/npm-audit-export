@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NPM Audit Export</title>
+
+    <style>
+      /* 
+      DARK THEME VARIABLES
+      
+      border
+      danger: #F15B50
+
+       */
+
+      /* 
+      LIGHT THEME VARIABLES
+      border
+      danger: #E2483D
+        */
+
+      .title {
+        font-size: 24px;
+        font-weight: bold;
+        margin: 0;
+      }
+
+      .dependency__box {
+        margin-bottom: 16px;
+        border-radius: 4px;
+        border-top: 3px solid transparent;
+      }
+
+      .dependency__header {
+        padding: 16px;
+      }
+      .dependency__header > div:nth-child(1) {
+        display: grid;
+        grid-template-columns: 30px auto;
+        column-gap: 8px;
+      }
+      .dependency__header > div:nth-child(1) .dependency__header__total-issues {
+        grid-column: 2/3;
+      }
+      .dependency__header__severity-icon {
+        font-weight: bold;
+        padding: 6px;
+        border-radius: 4px;
+        height: 30px;
+        width: 30px;
+        color: white;
+        margin: 0;
+        box-sizing: border-box;
+        font-size: 18px;
+        text-align: center;
+      }
+      .dependency__header__total-issues {
+        margin: 0;
+        font-size: 14px;
+      }
+
+      /* THEME LIGHT  */
+      .theme--light .title {
+        color: #333333;
+      }
+
+      .theme--light .severity--critical {
+        /* --ds-border-danger */
+        border-top-color: #e2483d;
+      }
+      .theme--light .severity--high {
+        /* border-top-color: #e2483d; */
+      }
+      .theme--light .severity--medium {
+        border-top-color: #e06c00;
+      }
+      .theme--light .severity--low {
+        /* border-top-color: #e2483d; */
+      }
+
+      .theme--light .dependency__header {
+        background-color: #f0f1f2;
+      }
+      .theme--light .severity-icon--critical {
+        background-color: #e2483d;
+      }
+      .theme--light .severity-icon--high {
+        /* background-color: #e2483d; */
+      }
+      .theme--light .severity-icon--medium {
+        background-color: #e06c00;
+      }
+      .theme--light .severity-icon--low {
+        /* background-color: #e2483d; */
+      }
+      .theme--light .dependency__header__total-issues {
+        /* ds-text-subtlest */
+        color: #6b6e76;
+      }
+
+      /* THEME DARK  */
+      .theme--dark .title {
+        color: #f0f1f2;
+      }
+
+      .theme--dark .severity--critical {
+        border-top-color: #f15b50;
+      }
+    </style>
+  </head>
+  <body class="theme--light">
+    <div>
+      <div class="dependency__box severity--critical">
+        <div class="dependency__header">
+          <div>
+            <div class="dependency__header__severity-icon severity-icon--critical">C</div>
+
+            <h2 class="title">@atlassian/atlassian-connect-express@12.2.0</h2>
+            <p class="dependency__header__total-issues">3 transitive issues</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="dependency__box severity--medium">
+        <div class="dependency__header">
+          <div>
+            <div class="dependency__header__severity-icon severity-icon--medium">M</div>
+
+            <h2 class="title">@atlassian/atlassian-connect-express@12.2.0</h2>
+            <p class="dependency__header__total-issues">3 transitive issues</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
