@@ -29,6 +29,7 @@
       .dependency__box {
         margin-bottom: 16px;
         border-radius: 4px;
+        border: 2px solid transparent;
         border-top: 3px solid transparent;
       }
 
@@ -61,8 +62,16 @@
       }
 
       /* THEME LIGHT  */
+      .theme--light {
+        background-color: #ffffff;
+      }
+
+      .theme--light .dependency__box {
+        border-color: #0b120e24;
+      }
+
       .theme--light .title {
-        color: #333333;
+        color: #292a2e;
       }
 
       .theme--light .severity--critical {
@@ -70,13 +79,15 @@
         border-top-color: #e2483d;
       }
       .theme--light .severity--high {
-        /* border-top-color: #e2483d; */
-      }
-      .theme--light .severity--medium {
+        /* --ds-border-warning */
         border-top-color: #e06c00;
       }
+      .theme--light .severity--medium {
+        /* --ds-background-accent-orange-subtle */
+        border-top-color: #fca700;
+      }
       .theme--light .severity--low {
-        /* border-top-color: #e2483d; */
+        border-top-color: #8c8f97;
       }
 
       .theme--light .dependency__header {
@@ -86,13 +97,13 @@
         background-color: #e2483d;
       }
       .theme--light .severity-icon--high {
-        /* background-color: #e2483d; */
-      }
-      .theme--light .severity-icon--medium {
         background-color: #e06c00;
       }
+      .theme--light .severity-icon--medium {
+        background-color: #fca700;
+      }
       .theme--light .severity-icon--low {
-        /* background-color: #e2483d; */
+        background-color: #8c8f97;
       }
       .theme--light .dependency__header__total-issues {
         /* ds-text-subtlest */
@@ -100,12 +111,47 @@
       }
 
       /* THEME DARK  */
+      .theme--dark {
+        background-color: #1f1f21;
+      }
       .theme--dark .title {
-        color: #f0f1f2;
+        color: #cecfd2;
       }
 
       .theme--dark .severity--critical {
+        /* --ds-border-danger */
         border-top-color: #f15b50;
+      }
+      .theme--dark .severity--high {
+        /* --ds-border-warning */
+        border-top-color: #f68909;
+      }
+      .theme--dark .severity--medium {
+        /* --ds-background-accent-orange-subtle */
+        border-top-color: #9e4c00;
+      }
+      .theme--dark .severity--low {
+        border-top-color: #63666b;
+      }
+
+      .theme--dark .dependency__header {
+        background-color: #303134;
+      }
+      .theme--dark .severity-icon--critical {
+        background-color: #f15b50;
+      }
+      .theme--dark .severity-icon--high {
+        background-color: #f68909;
+      }
+      .theme--dark .severity-icon--medium {
+        background-color: #9e4c00;
+      }
+      .theme--dark .severity-icon--low {
+        background-color: #63666b;
+      }
+      .theme--dark .dependency__header__total-issues {
+        /* ds-text-subtlest */
+        color: #96999e;
       }
     </style>
   </head>
@@ -122,10 +168,32 @@
         </div>
       </div>
 
+      <div class="dependency__box severity--high">
+        <div class="dependency__header">
+          <div>
+            <div class="dependency__header__severity-icon severity-icon--high">H</div>
+
+            <h2 class="title">@atlassian/atlassian-connect-express@12.2.0</h2>
+            <p class="dependency__header__total-issues">3 transitive issues</p>
+          </div>
+        </div>
+      </div>
+
       <div class="dependency__box severity--medium">
         <div class="dependency__header">
           <div>
             <div class="dependency__header__severity-icon severity-icon--medium">M</div>
+
+            <h2 class="title">@atlassian/atlassian-connect-express@12.2.0</h2>
+            <p class="dependency__header__total-issues">3 transitive issues</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="dependency__box severity--low">
+        <div class="dependency__header">
+          <div>
+            <div class="dependency__header__severity-icon severity-icon--low">L</div>
 
             <h2 class="title">@atlassian/atlassian-connect-express@12.2.0</h2>
             <p class="dependency__header__total-issues">3 transitive issues</p>
