@@ -3,24 +3,7 @@ export type ReportV2Type = {
   auditReportVersion: number;
   /** Vulnerabilities found in the project */
   vulnerabilities: {
-    [key: string]: {
-      /** Name of the vulnerable package (Same as the key) e.g., "react" */
-      name: string;
-      /** Severity of the vulnerability */
-      severity: SeverityType;
-      /** Is this vulnerability directly affecting your project */
-      isDirect: boolean;
-      /** This array contains information about how the vulnerability is introduced */
-      via: Array<string | VulnerabilityViaType>;
-      /** Dependencies on your project that rely on this vulnerable package */
-      effects: string[];
-      /** Range of versions affected. E.g., "<1.20.3" */
-      range: string;
-      /** Actual filesystem locations of the vulnerable copies: */
-      nodes: string[];
-      /** Is a fix available for this vulnerability */
-      fixAvailable: boolean;
-    };
+    [key: string]: VulnerabilityType;
   };
   metadata: {
     /** Vulnerability counts by severity */
@@ -45,6 +28,25 @@ export type ReportV2Type = {
 };
 
 type SeverityType = "critical" | "high" | "moderate" | "low" | "info";
+
+type VulnerabilityType = {
+  /** Name of the vulnerable package (Same as the key) e.g., "react" */
+  name: string;
+  /** Severity of the vulnerability */
+  severity: SeverityType;
+  /** Is this vulnerability directly affecting your project */
+  isDirect: boolean;
+  /** This array contains information about how the vulnerability is introduced */
+  via: Array<string | VulnerabilityViaType>;
+  /** Dependencies on your project that rely on this vulnerable package */
+  effects: string[];
+  /** Range of versions affected. E.g., "<1.20.3" */
+  range: string;
+  /** Actual filesystem locations of the vulnerable copies: */
+  nodes: string[];
+  /** Is a fix available for this vulnerability */
+  fixAvailable: boolean;
+};
 
 type VulnerabilityViaType = {
   source: number;
