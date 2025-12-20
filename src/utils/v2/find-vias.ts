@@ -23,11 +23,13 @@ export default function findVias({ report, key, isParent }: Props): any[] {
     const via = report.vulnerabilities[key].via[i];
 
     switch (typeof via) {
+      // If via is an object, it's a VulnerabilityViaType
       case "object": {
         vulns[i]?.push(via);
 
         break;
       }
+      // If via is a string, it's another vulnerability key
       case "string": {
         const data = findVias({ report, key: via, isParent: false });
 
