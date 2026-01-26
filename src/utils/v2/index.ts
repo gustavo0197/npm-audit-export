@@ -5,10 +5,5 @@ import { type ReportV2Type } from "../../types/report.js";
 export default function generateReportV2(report: ReportV2Type) {
   const directIssues = getDirectIssues(report);
 
-  console.log("DIRECT ISSUES FOUND: ", Object.values(directIssues).length);
-
-  const populatedVulnerabilities = populateVulnerabilities({ report, directIssues });
-  // console.log("DIRECT ISSUES: ", JSON.stringify(populatedVulnerabilities));
-  console.log("DIRECT ISSUES: ", populatedVulnerabilities);
-  // return populateVulnerabilities({ report, directIssues });
+  return populateVulnerabilities({ report, directIssues });
 }

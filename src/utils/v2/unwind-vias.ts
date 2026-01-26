@@ -1,59 +1,39 @@
-export default function unwindVias(vias: any[][], sibbling?: string): any[] {
-  const unwoundVias: any[][] = [];
+export default function unwindVias(vulnerabilities: any[]): any[] {
+  const flat: any[][] = [[]];
 
-  for (let x = 0; x < vias.length; x++) {
-    unwoundVias.push([]);
-    let parent = "";
-
-    if (x === 0 && sibbling) {
-      unwoundVias[x]?.push(sibbling);
-    }
-
-    if (typeof vias[0] === "string") {
-      parent = vias[0];
-    }
-
-    if (!vias[x]) {
-      continue;
-    }
-
-    switch (typeof vias[x]) {
+  for (const vulnerability of vulnerabilities) {
+    switch (typeof vulnerability) {
       case "string": {
-        unwoundVias[x]?.push([vias[x]]);
+        // If it's a string, just push it to the last array in flat
+        flat[flat.length - 1]?.push(vulnerability);
+
         break;
       }
       case "object": {
-        if (!vias[x]) {
-          continue;
-        }
+        if (Array.isArray(vulnerability)) {
+          const children = unwindVias(vulnerability.slice(1));
+          const hasArrays = children.every((n) => Array.isArray(n));
 
-        if (Array.isArray(vias[x])) {
-          // Recursively unwind
-          const data = unwindVias(vias[x], parent).flat();
-
-          unwoundVias[x]?.push(data);
+          // If children are arrays, we need to create new paths
+          if (hasArrays) {
+            for (const child of children) {
+              flat[flat.length - 1]?.push([vulnerability[0], ...child]);
+            }
+          } else {
+            // If children are not arrays, just push them as a single path
+            flat[flat.length - 1]?.push([vulnerability[0], ...children]);
+          }
         } else {
-          unwoundVias[x]?.push(vias[x]);
+          // If it's an object but not an array, just push it as is
+          flat[flat.length - 1]?.push(vulnerability);
         }
+
         break;
       }
-      default: {
-        console.warn("Unknown via type during unwind: ", {
-          type: typeof vias[x],
-          via: vias[x],
-        });
-      }
+      default:
+        console.warn("unknown type", typeof vulnerability);
     }
   }
 
-  // console.log("UNWINDING VIAS: ", vias);
-  // console.log("UNWOUND VIAS: ", unwoundVias);
-
-  // return unwoundVias;
-
-  if (sibbling) {
-    return unwoundVias.flat();
-  } else {
-    return unwoundVias;
-  }
+  return flat.flat();
 }

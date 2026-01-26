@@ -8,16 +8,16 @@ import unwindVias from "./unwind-vias.js";
  * @returns
  */
 export default function populateVulnerabilities({ report, directIssues }: Props) {
-  // for (const key in directIssues) {
-  // }
+  const vulnerabilities: { [key: string]: any } = {};
 
-  // TODO: Iterate over all direct issues and populate their vias
-  // return { express: JSON.stringify(unwindVias(findVias({ report, key: "express", isParent: true }))) };
-  return {
-    // express: unwindVias(findVias({ report, key: "express", isParent: true }).slice(3, 4)).flat(2),
-    express: unwindVias(findVias({ report, key: "express", isParent: true }).slice(4, 7)).flat(2),
-  };
-  // return { express: directIssues["express"] };
+  // Iterate over all direct issues and populate their vias
+  for (const key in directIssues) {
+    const vias = findVias({ report, key, isParent: true });
+
+    vulnerabilities[key] = unwindVias(vias);
+  }
+
+  return vulnerabilities;
 }
 
 type Props = {

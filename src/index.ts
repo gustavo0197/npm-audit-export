@@ -26,8 +26,24 @@ async function main() {
       // Parse JSON content
       const parsedInput = JSON.parse(fileContent);
 
-      // TODO: Verify which version of report is being used and call the appropriate functions
-      generateReportV2(parsedInput);
+      // Verify which version of report is being used and call the appropriate functions
+      switch (parsedInput.auditReportVersion) {
+        case 1: {
+          console.log("Audit v1 is not supported yet.");
+
+          break;
+        }
+        case 2: {
+          const report = generateReportV2(parsedInput);
+
+          // TODO: Generate HTML file using the report data
+
+          break;
+        }
+        default: {
+          throw new Error(`Unsupported audit report version: ${parsedInput.auditReportVersion}`);
+        }
+      }
 
       process.exit(1);
     } else {
