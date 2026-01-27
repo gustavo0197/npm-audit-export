@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -20,6 +20,10 @@
       danger: #E2483D
         */
 
+      p {
+        margin: 0;
+      }
+
       .title {
         font-size: 24px;
         font-weight: bold;
@@ -35,6 +39,7 @@
 
       .dependency__header {
         padding: 16px;
+        border-bottom: 1px solid transparent;
       }
       .dependency__header > div:nth-child(1) {
         display: grid;
@@ -59,6 +64,35 @@
       .dependency__header__total-issues {
         margin: 0;
         font-size: 14px;
+      }
+
+      .dependency__body {
+        padding: 24px;
+      }
+      .dependency__vulnerabilities {
+        border: 1px solid transparent;
+      }
+      .dependency__vulnerability {
+        padding: 6px 16px;
+      }
+      .dependency__vulnerability + .dependency__vulnerability {
+        border-top: 0.5px solid transparent;
+      }
+      .vulnerability__title {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 8px;
+      }
+      .vulnerability__title p + p {
+        font-size: 12px;
+      }
+      .vulnerability__title span {
+        border: 1px solid transparent;
+        font-size: 11px;
+        padding: 1px 4px;
+        border-radius: 8px;
+        font-weight: 600;
       }
 
       /* THEME LIGHT  */
@@ -92,6 +126,7 @@
 
       .theme--light .dependency__header {
         background-color: #f0f1f2;
+        border-bottom-color: #0b120e24;
       }
       .theme--light .severity-icon--critical {
         background-color: #e2483d;
@@ -108,6 +143,21 @@
       .theme--light .dependency__header__total-issues {
         /* ds-text-subtlest */
         color: #6b6e76;
+      }
+
+      .theme--light .dependency__vulnerabilities {
+        border-color: #0b120e24;
+        background-color: #f0f1f2;
+      }
+      .theme--light .dependency__vulnerability + .dependency__vulnerability {
+        border-top-color: #0515240f;
+      }
+      .theme--light .vulnerability__title p {
+        color: #292a2e;
+      }
+      .theme--light .vulnerability__title span {
+        border-color: #0b120e24;
+        color: #505258;
       }
 
       /* THEME DARK  */
@@ -164,6 +214,43 @@
 
             <h2 class="title">@atlassian/atlassian-connect-express@12.2.0</h2>
             <p class="dependency__header__total-issues">3 transitive issues</p>
+          </div>
+        </div>
+
+        <div class="dependency__body">
+          <div class="dependency__vulnerabilities">
+            <div class="dependency__vulnerability">
+              <div>
+                <div class="vulnerability__title">
+                  <p>Denial-of-Service Extended Event Loop Blocking in qs</p>
+                  <p>↳</p>
+                  <span>qs</span>
+                </div>
+              </div>
+              <div></div>
+            </div>
+
+            <div class="dependency__vulnerability">
+              <div>
+                <div class="vulnerability__title">
+                  <p>qs vulnerable to Prototype Pollution</p>
+                  <p>↳</p>
+                  <span>qs</span>
+                </div>
+              </div>
+              <div></div>
+            </div>
+
+            <div class="dependency__vulnerability">
+              <div>
+                <div class="vulnerability__title">
+                  <p>cookie accepts cookie name, path, and domain with out of bounds characters</p>
+                  <p>↳</p>
+                  <span>cookie</span>
+                </div>
+              </div>
+              <div></div>
+            </div>
           </div>
         </div>
       </div>
