@@ -1,4 +1,4 @@
-import loadReportFile from "./utils/common/load-file.js";
+import loadReportFile from "./utils/common/load-report-file.js";
 import generateReportV2 from "./utils/v2/index.js";
 
 async function main() {
@@ -37,6 +37,7 @@ async function main() {
           const report = generateReportV2(parsedInput);
 
           // TODO: Generate HTML file using the report data
+          console.log("Generated report: ", report);
 
           break;
         }

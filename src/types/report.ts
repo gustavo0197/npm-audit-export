@@ -48,7 +48,7 @@ type VulnerabilityType = {
   fixAvailable: boolean;
 };
 
-type VulnerabilityViaType = {
+export type VulnerabilityViaType = {
   source: number;
   /** Dependency name */
   name: string;
