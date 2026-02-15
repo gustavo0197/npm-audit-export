@@ -20,8 +20,21 @@
       danger: #E2483D
         */
 
+      /* Default fonts */
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji",
+          "Segoe UI Emoji", "Segoe UI Symbol";
+        margin: 0;
+        padding: 24px;
+      }
+
       p {
         margin: 0;
+      }
+
+      a {
+        text-decoration: none;
       }
 
       .title {
@@ -49,7 +62,7 @@
       .dependency__header > div:nth-child(1) .dependency__header__total-issues {
         grid-column: 2/3;
       }
-      .dependency__header__severity-icon {
+      .dependency__header .severity-icon {
         font-weight: bold;
         padding: 6px;
         border-radius: 4px;
@@ -78,26 +91,55 @@
       .dependency__vulnerability + .dependency__vulnerability {
         border-top: 0.5px solid transparent;
       }
-      .vulnerability__title {
+      .vulnerability {
+        display: flex;
+        justify-content: space-between;
+      }
+      .vulnerability__description {
         display: flex;
         flex-direction: row;
         align-items: center;
         gap: 8px;
       }
-      .vulnerability__title p + p {
+      .vulnerability__description p + p {
         font-size: 12px;
       }
-      .vulnerability__title span {
+      .vulnerability__description span {
         border: 1px solid transparent;
         font-size: 11px;
         padding: 1px 4px;
         border-radius: 8px;
         font-weight: 600;
       }
+      .vulnerability__description .severity-icon {
+        width: 18px;
+        height: 18px;
+        display: flex;
+        font-size: 10px;
+        font-weight: bold;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        border-radius: 4px;
+      }
+      .vulnerability__links {
+        display: flex;
+        flex-direction: row;
+      }
+      .vulnerability__links a {
+        padding: 0 4px;
+      }
+      .vulnerability__links a + a {
+        border-left: 1px solid transparent;
+      }
 
       /* THEME LIGHT  */
       .theme--light {
         background-color: #ffffff;
+      }
+
+      .theme--light a {
+        color: #1868db;
       }
 
       .theme--light .dependency__box {
@@ -152,18 +194,26 @@
       .theme--light .dependency__vulnerability + .dependency__vulnerability {
         border-top-color: #0515240f;
       }
-      .theme--light .vulnerability__title p {
+      .theme--light .vulnerability__description p {
         color: #292a2e;
       }
-      .theme--light .vulnerability__title span {
+      .theme--light .vulnerability__description span {
         border-color: #0b120e24;
         color: #505258;
+      }
+      .vulnerability__links a + a {
+        border-color: #0b120e24;
       }
 
       /* THEME DARK  */
       .theme--dark {
         background-color: #1f1f21;
       }
+
+      .theme--dark a {
+        color: #669df1;
+      }
+
       .theme--dark .title {
         color: #cecfd2;
       }
@@ -210,7 +260,7 @@
       <div class="dependency__box severity--critical">
         <div class="dependency__header">
           <div>
-            <div class="dependency__header__severity-icon severity-icon--critical">C</div>
+            <div class="severity-icon severity-icon--critical">C</div>
 
             <h2 class="title">@atlassian/atlassian-connect-express@12.2.0</h2>
             <p class="dependency__header__total-issues">3 transitive issues</p>
@@ -220,11 +270,21 @@
         <div class="dependency__body">
           <div class="dependency__vulnerabilities">
             <div class="dependency__vulnerability">
-              <div>
-                <div class="vulnerability__title">
+              <div class="vulnerability">
+                <div class="vulnerability__description">
+                  <div class="severity-icon severity-icon--critical">C</div>
                   <p>Denial-of-Service Extended Event Loop Blocking in qs</p>
                   <p>↳</p>
                   <span>qs</span>
+                </div>
+
+                <div class="vulnerability__links">
+                  <a target="_blank" href="https://cwe.mitre.org/data/definitions/287.html">CWE-287</a>
+                  <a
+                    target="_blank"
+                    href="https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:N/E:P"
+                    >CVSS 9.3</a
+                  >
                 </div>
               </div>
               <div></div>
@@ -232,7 +292,8 @@
 
             <div class="dependency__vulnerability">
               <div>
-                <div class="vulnerability__title">
+                <div class="vulnerability__description">
+                  <div class="severity-icon severity-icon--high">H</div>
                   <p>qs vulnerable to Prototype Pollution</p>
                   <p>↳</p>
                   <span>qs</span>
@@ -243,7 +304,20 @@
 
             <div class="dependency__vulnerability">
               <div>
-                <div class="vulnerability__title">
+                <div class="vulnerability__description">
+                  <div class="severity-icon severity-icon--low">L</div>
+                  <p>cookie accepts cookie name, path, and domain with out of bounds characters</p>
+                  <p>↳</p>
+                  <span>cookie</span>
+                </div>
+              </div>
+              <div></div>
+            </div>
+
+            <div class="dependency__vulnerability">
+              <div>
+                <div class="vulnerability__description">
+                  <div class="severity-icon severity-icon--medium">M</div>
                   <p>cookie accepts cookie name, path, and domain with out of bounds characters</p>
                   <p>↳</p>
                   <span>cookie</span>
@@ -258,7 +332,7 @@
       <div class="dependency__box severity--high">
         <div class="dependency__header">
           <div>
-            <div class="dependency__header__severity-icon severity-icon--high">H</div>
+            <div class="severity-icon severity-icon--high">H</div>
 
             <h2 class="title">@atlassian/atlassian-connect-express@12.2.0</h2>
             <p class="dependency__header__total-issues">3 transitive issues</p>
@@ -269,7 +343,7 @@
       <div class="dependency__box severity--medium">
         <div class="dependency__header">
           <div>
-            <div class="dependency__header__severity-icon severity-icon--medium">M</div>
+            <div class="severity-icon severity-icon--medium">M</div>
 
             <h2 class="title">@atlassian/atlassian-connect-express@12.2.0</h2>
             <p class="dependency__header__total-issues">3 transitive issues</p>
@@ -280,7 +354,7 @@
       <div class="dependency__box severity--low">
         <div class="dependency__header">
           <div>
-            <div class="dependency__header__severity-icon severity-icon--low">L</div>
+            <div class="severity-icon severity-icon--low">L</div>
 
             <h2 class="title">@atlassian/atlassian-connect-express@12.2.0</h2>
             <p class="dependency__header__total-issues">3 transitive issues</p>
