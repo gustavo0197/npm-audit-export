@@ -1,4 +1,3 @@
-<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -258,6 +257,16 @@
   <body class="theme--light">
     <div id="vulnerabilities-count"></div>
 
-    <div id="main-content"></div>
+    <div id="main-content">
+      {{#each vulnerabilities}}
+        <div class="dependency__box">
+          <div class="dependency__header">
+            <div>
+              <span class="severity-icon--{{severity}}"></span>
+            </div>
+          </div>
+        </div>
+      {{/each}}
+    </div>
   </body>
 </html>

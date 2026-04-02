@@ -1,3 +1,4 @@
+import Handlebars from "handlebars";
 import { type VulnerabilityViaType } from "../../types/report.js";
 import loadTemplate from "../common/load-template.js";
 
@@ -18,4 +19,11 @@ export default function generateReportTemplateV2({
     for (const vulnerability of vulnerabilities) {
     }
   }
+
+  // NOTE: testing the template
+  const hbsTemplate = Handlebars.compile(loadTemplate());
+
+  const html = hbsTemplate({ vulnerabilities: report });
+
+  return html;
 }
