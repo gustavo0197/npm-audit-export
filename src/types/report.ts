@@ -27,7 +27,7 @@ export type ReportV2Type = {
   };
 };
 
-type SeverityType = "critical" | "high" | "moderate" | "low" | "info";
+export type SeverityType = "critical" | "high" | "moderate" | "low" | "info";
 
 type VulnerabilityType = {
   /** Name of the vulnerable package (Same as the key) e.g., "react" */

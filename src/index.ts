@@ -2,6 +2,8 @@ import loadReportFile from "./utils/common/load-report-file.js";
 import generateReportV2 from "./utils/v2/index.js";
 import generateReportTemplateV2 from "./utils/v2/generate-report-template.js";
 import writeReport from "./utils/common/write-report.js";
+import type { ThemeType } from "./types/theme.js";
+const VALID_THEMES = ["light", "dark"];
 
 async function main() {
   try {
@@ -9,10 +11,22 @@ async function main() {
       // Use arguments provided via CLI
       console.debug("PROVIDED ARGS", process.argv);
       const jsonIndex = process.argv.indexOf("--json");
+      const themeIndex = process.argv.indexOf("--theme");
+      let theme: ThemeType = "light";
 
       // --json argument is required
       if (jsonIndex === -1) {
         throw new Error("Please provide --json argument with npm audit JSON data.");
+      }
+
+      if (themeIndex !== -1) {
+        theme = process.argv[themeIndex + 1] as ThemeType;
+
+        if (!VALID_THEMES.includes(theme)) {
+          console.warn(`Invalid theme: ${theme}. Valid themes are: ${VALID_THEMES.join(", ")}. Using default theme`);
+
+          theme = "light";
+        }
       }
 
       const jsonFilePath = process.argv[jsonIndex + 1];
@@ -37,11 +51,11 @@ async function main() {
         }
         case 2: {
           const report = generateReportV2(parsedInput);
+          // console.log("Generated report: ", report["body-parser"]);
 
           // TODO: Generate HTML file using the report data
-          const html = generateReportTemplateV2({ report });
+          const html = generateReportTemplateV2({ report, theme });
           writeReport(html);
-          // console.log("Generated report: ", report);
 
           break;
         }
