@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, afterEach } from "@jest/globals";
+import { describe, it, expect, beforeEach, afterEach } from "vitest";
 import { writeFileSync, unlinkSync, existsSync } from "fs";
 import { resolve } from "path";
 import loadFile from "./load-report-file";
