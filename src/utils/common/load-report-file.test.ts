@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, afterEach } from "vitest";
 import { writeFileSync, unlinkSync, existsSync } from "fs";
 import { resolve } from "path";
-import loadFile from "./load-report-file";
+import loadFile from "./load-report-file.js";
 
 describe("loadFile", () => {
   const testFilePath = "test-report.json";
