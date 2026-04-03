@@ -1,7 +1,7 @@
-import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
+import { describe, test, expect, beforeEach, vi } from "vitest";
 import { writeFileSync } from "fs";
 import { resolve } from "path";
-import writeReport from "./write-report";
+import writeReport from "./write-report.js";
 
 // Mock fs module
 vi.mock("fs", () => ({
@@ -22,74 +22,50 @@ describe("writeReport", () => {
     vi.clearAllMocks();
   });
 
-  afterEach(() => {
-    vi.restoreAllMocks();
-  });
-
-  it("should write HTML content to default file name", () => {
+  test("should write HTML content to default file name", () => {
     writeReport(mockHtml);
 
     expect(resolve).toHaveBeenCalledWith(process.cwd(), defaultFileName);
-    expect(writeFileSync).toHaveBeenCalledWith(
-      `${process.cwd()}/${defaultFileName}`,
-      mockHtml,
-      "utf-8"
-    );
+    expect(writeFileSync).toHaveBeenCalledWith(`${process.cwd()}/${defaultFileName}`, mockHtml, "utf-8");
   });
 
-  it("should write HTML content to custom file name", () => {
+  test("should write HTML content to custom file name", () => {
     writeReport(mockHtml, customFileName);
 
     expect(resolve).toHaveBeenCalledWith(process.cwd(), customFileName);
-    expect(writeFileSync).toHaveBeenCalledWith(
-      `${process.cwd()}/${customFileName}`,
-      mockHtml,
-      "utf-8"
-    );
+    expect(writeFileSync).toHaveBeenCalledWith(`${process.cwd()}/${customFileName}`, mockHtml, "utf-8");
   });
 
-  it("should handle empty HTML string", () => {
+  test("should handle empty HTML string", () => {
     const emptyHtml = "";
     writeReport(emptyHtml);
 
-    expect(writeFileSync).toHaveBeenCalledWith(
-      `${process.cwd()}/${defaultFileName}`,
-      emptyHtml,
-      "utf-8"
-    );
+    expect(writeFileSync).toHaveBeenCalledWith(`${process.cwd()}/${defaultFileName}`, emptyHtml, "utf-8");
   });
 
-  it("should handle HTML with special characters", () => {
+  test("should handle HTML with special characters", () => {
     const specialHtml = "<html><body>Test & 'quotes' \"double\" <script></script></body></html>";
     writeReport(specialHtml);
 
-    expect(writeFileSync).toHaveBeenCalledWith(
-      `${process.cwd()}/${defaultFileName}`,
-      specialHtml,
-      "utf-8"
-    );
+    expect(writeFileSync).toHaveBeenCalledWith(`${process.cwd()}/${defaultFileName}`, specialHtml, "utf-8");
   });
 
-  it("should handle file names with paths", () => {
+  test("should handle file names with paths", () => {
     const fileNameWithPath = "output/reports/test-report.html";
     writeReport(mockHtml, fileNameWithPath);
 
     expect(resolve).toHaveBeenCalledWith(process.cwd(), fileNameWithPath);
-    expect(writeFileSync).toHaveBeenCalledWith(
-      `${process.cwd()}/${fileNameWithPath}`,
-      mockHtml,
-      "utf-8"
-    );
+    expect(writeFileSync).toHaveBeenCalledWith(`${process.cwd()}/${fileNameWithPath}`, mockHtml, "utf-8");
   });
 
-  it("should use utf-8 encoding", () => {
+  test("should use utf-8 encoding", () => {
     writeReport(mockHtml);
 
     const writeFileSyncCalls = vi.mocked(writeFileSync).mock.calls;
     expect(writeFileSyncCalls[0][2]).toBe("utf-8");
   });
 
-  it("should resolve path relative to current working directory", () => {
+  test("should resolve path relative to current working directory", () => {
     const cwd = process.cwd();
     writeReport(mockHtml, customFileName);
 

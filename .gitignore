@@ -7,6 +7,9 @@ node_modules
 .env
 .vscode
 
+# Testing
+coverage
+
 report.json
 report.html
 .aider*
