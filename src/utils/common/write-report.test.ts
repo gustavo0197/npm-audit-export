@@ -62,7 +62,8 @@ describe("writeReport", () => {
     writeReport(mockHtml);
 
     const writeFileSyncCalls = vi.mocked(writeFileSync).mock.calls;
-    expect(writeFileSyncCalls[0][2]).toBe("utf-8");
+
+    expect(writeFileSyncCalls[0]?.[2]).toBe("utf-8");
   });
 
   test("should resolve path relative to current working directory", () => {

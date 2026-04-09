@@ -4,6 +4,8 @@ import loadTemplate from "../common/load-template.js";
 import type { ThemeType } from "../../types/theme.js";
 import getLinks from "./get-links.js";
 import type { TemplateDependencyType } from "../../types/template.js";
+import getCurrentDate from "../common/get-current-date.js";
+import { LIGHT_THEME, DARK_THEME, BASE_CSS } from "../common/constants/theme.js";
 
 Handlebars.registerHelper("eq", function (a, b) {
   return a === b;
@@ -16,6 +18,7 @@ export default function generateReportTemplateV2({
   report: { [key: string]: VulnerabilityViaType[] };
   theme: ThemeType;
 }): string {
+  const date = getCurrentDate();
   const template = loadTemplate();
   const counts = {
     critical: 0,
@@ -76,7 +79,14 @@ export default function generateReportTemplateV2({
   // Compile the template
   const hbsTemplate = Handlebars.compile(template);
 
-  const html = hbsTemplate({ counts, theme, dependencies });
+  const html = hbsTemplate({
+    counts,
+    theme,
+    dependencies,
+    date,
+    baseCss: BASE_CSS,
+    themeCss: theme === "light" ? LIGHT_THEME : DARK_THEME,
+  });
 
   return html;
 }

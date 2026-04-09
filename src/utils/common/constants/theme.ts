@@ -1,0 +1,308 @@
+export const BASE_CSS = `
+body {
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol";
+  margin: 0;
+  padding: 24px;
+}
+p {
+  margin: 0;
+}
+a {
+  text-decoration: none;
+}
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 32px;
+}
+.header h2 {
+  font-size: 32px;
+  font-weight: bold;
+}
+.header p {
+  font-size: 14px;
+  font-style: italic;
+}
+.export-date {
+  margin-bottom: 8px;
+}
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+}
+.vulnerabilities-count {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 32px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.vulnerability-count {
+  padding: 16px 24px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 120px;
+}
+.vulnerability-count p:nth-child(2) {
+  font-size: 14px;
+  padding: 4px 0;
+  width: 100%;
+  text-align: center;
+  border-radius: 4px;
+  font-weight: bold;
+}
+.dependency__box {
+  margin-bottom: 16px;
+  border-radius: 4px;
+  border: 2px solid transparent;
+  border-top: 3px solid transparent;
+}
+.dependency__header {
+  padding: 16px;
+  border-bottom: 1px solid transparent;
+}
+.dependency__header > div:nth-child(1) {
+  display: grid;
+  grid-template-columns: 30px auto;
+  column-gap: 8px;
+}
+.dependency__header > div:nth-child(1) .dependency__header__total-issues {
+  grid-column: 2/3;
+}
+.dependency__header .severity-icon {
+  font-weight: bold;
+  padding: 6px;
+  border-radius: 4px;
+  height: 30px;
+  width: 30px;
+  color: white;
+  margin: 0;
+  box-sizing: border-box;
+  font-size: 18px;
+  text-align: center;
+}
+.dependency__header__total-issues {
+  margin: 0;
+  font-size: 14px;
+}
+.dependency__body {
+  padding: 24px;
+}
+.dependency__vulnerabilities {
+  border: 1px solid transparent;
+}
+.dependency__vulnerability {
+  padding: 6px 16px;
+}
+.dependency__vulnerability + .dependency__vulnerability {
+  border-top: 0.5px solid transparent;
+}
+.vulnerability {
+  display: flex;
+  justify-content: space-between;
+}
+.vulnerability__description {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+.vulnerability__description p + p {
+  font-size: 12px;
+}
+.vulnerability__description span {
+  border: 1px solid transparent;
+  font-size: 11px;
+  padding: 1px 4px;
+  border-radius: 8px;
+  font-weight: 600;
+}
+.vulnerability__description .severity-icon {
+  width: 18px;
+  height: 18px;
+  display: flex;
+  font-size: 10px;
+  font-weight: bold;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  border-radius: 4px;
+}
+.vulnerability__links {
+  display: flex;
+  flex-direction: row;
+}
+.vulnerability__links a {
+  padding: 0 4px;
+  font-size: 12px;
+}
+.vulnerability__links a:hover {
+  text-decoration: underline;
+}
+.vulnerability__links a + a {
+  border-left: 1px solid transparent;
+}
+`;
+
+export const LIGHT_THEME = `
+.theme--light {
+  background-color: #ffffff;
+}
+.theme--light a {
+  color: #1868db;
+}
+.theme--light .header {
+  color: #292a2e;
+}
+.theme--light .vulnerability-count {
+  color: #292a2e;
+  border-color: #0b120e24;
+}
+.theme--light .dependency__box {
+  border-color: #0b120e24;
+}
+.theme--light .title {
+  color: #292a2e;
+}
+.theme--light .severity--critical {
+  /* --ds-border-danger */
+  border-top-color: #e2483d;
+}
+.theme--light .severity--high {
+  /* --ds-border-warning */
+  border-top-color: #e06c00;
+}
+.theme--light .severity--moderate {
+  /* --ds-background-accent-orange-subtle */
+  border-top-color: #fca700;
+}
+.theme--light .severity--low {
+  border-top-color: #8c8f97;
+}
+.theme--light .dependency__header {
+  background-color: #f0f1f2;
+  border-bottom-color: #0b120e24;
+}
+.theme--light .severity-box--critical {
+  color: white;
+  background-color: #e2483d;
+}
+.theme--light .severity-box--high {
+  color: white;
+  background-color: #e06c00;
+}
+.theme--light .severity-box--moderate {
+  color: white;
+  background-color: #fca700;
+}
+.theme--light .severity-box--low {
+  color: white;
+  background-color: #8c8f97;
+}
+.theme--light .dependency__header__total-issues {
+  /* ds-text-subtlest */
+  color: #6b6e76;
+}
+.theme--light .dependency__vulnerabilities {
+  border-color: #0b120e24;
+  background-color: #f0f1f2;
+}
+.theme--light .dependency__vulnerability + .dependency__vulnerability {
+  border-top-color: #0515240f;
+}
+.theme--light .vulnerability__description p {
+  color: #292a2e;
+}
+.theme--light .vulnerability__description span {
+  border-color: #0b120e24;
+  color: #505258;
+}
+.vulnerability__links a + a {
+  border-color: #0b120e24;
+}
+`;
+
+export const DARK_THEME = `
+.theme--dark {
+  background-color: #1f1f21;
+}
+.theme--dark a {
+  color: #669df1;
+}
+.theme--dark .header {
+  color: #cecfd2;
+}
+.theme--dark .vulnerability-count {
+  border-color: #e3e4f21f;
+  color: #cecfd2;
+}
+.theme--dark .dependency__box {
+  border-color: #e3e4f21f;
+}
+.theme--dark .title {
+  color: #cecfd2;
+}
+.theme--dark .severity--critical {
+  /* --ds-border-danger */
+  border-top-color: #f15b50;
+}
+.theme--dark .severity--high {
+  /* --ds-border-warning */
+  border-top-color: #f68909;
+}
+.theme--dark .severity--moderate {
+  /* --ds-background-accent-orange-subtle */
+  border-top-color: #9e4c00;
+}
+.theme--dark .severity--low {
+  border-top-color: #63666b;
+}
+.theme--dark .dependency__header {
+  background-color: #303134;
+}
+.theme--dark .severity-box--critical {
+  color: white;
+  background-color: #f15b50;
+}
+.theme--dark .severity-box--high {
+  color: white;
+  background-color: #f68909;
+}
+.theme--dark .severity-box--moderate {
+  color: white;
+  background-color: #9e4c00;
+}
+.theme--dark .severity-box--low {
+  color: white;
+  background-color: #63666b;
+}
+.theme--dark .dependency__header__total-issues {
+  /* ds-text-subtlest */
+  color: #96999e;
+}
+.theme--dark .dependency__vulnerabilities {
+  border-color: #e3e4f21f;
+  background-color: #303134;
+}
+.theme--dark .dependency__vulnerability + .dependency__vulnerability {
+  border-top-color: #0515240f;
+}
+.theme--dark .vulnerability__description p {
+  color: #cecfd2;
+}
+.theme--dark .vulnerability__description span {
+  border-color: #e3e4f21f;
+  color: #a9abaf;
+}
+.vulnerability__links a + a {
+  border-color: #e3e4f21f;
+}
+`;

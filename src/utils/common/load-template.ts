@@ -10,7 +10,6 @@ export default function loadTemplate(filePath: string = "ui/template.hbs"): stri
     throw new Error("Only Handlebars files are supported.");
   }
 
-  // TODO: Validate that file is an HTML file
   const resolvedPath = resolve(process.cwd(), filePath);
 
   return readFileSync(resolvedPath, "utf-8");
