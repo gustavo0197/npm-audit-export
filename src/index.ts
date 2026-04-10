@@ -3,33 +3,24 @@ import generateReportV2 from "./utils/v2/index.js";
 import generateReportTemplateV2 from "./utils/v2/generate-report-template.js";
 import type { ThemeType } from "./types/theme.js";
 import { writeFileSync } from "fs";
+import getArg from "./utils/common/get-arg.js";
 const VALID_THEMES = ["light", "dark"];
 
 async function main() {
   try {
+    let theme: ThemeType = (getArg("theme") || "light") as ThemeType;
+
+    if (!VALID_THEMES.includes(theme)) {
+      console.error(`Invalid theme ${theme}`);
+
+      return process.exit(1);
+    }
+
     if (process.stdin.isTTY) {
       // Use arguments provided via CLI
       console.debug("PROVIDED ARGS", process.argv);
-      const jsonIndex = process.argv.indexOf("--json");
-      const themeIndex = process.argv.indexOf("--theme");
-      let theme: ThemeType = "light";
 
-      // --json argument is required
-      if (jsonIndex === -1) {
-        throw new Error("Please provide --json argument with npm audit JSON data.");
-      }
-
-      if (themeIndex !== -1) {
-        theme = process.argv[themeIndex + 1] as ThemeType;
-
-        if (!VALID_THEMES.includes(theme)) {
-          console.warn(`Invalid theme: ${theme}. Valid themes are: ${VALID_THEMES.join(", ")}. Using default theme`);
-
-          theme = "light";
-        }
-      }
-
-      const jsonFilePath = process.argv[jsonIndex + 1];
+      const jsonFilePath = getArg("json", true);
 
       // --json argument must have a valid file path
       if (!jsonFilePath) {
@@ -62,9 +53,9 @@ async function main() {
         }
       }
 
-      process.exit(1);
+      process.exit(0);
     } else {
-      console.debug("Reading from stdin...");
+      console.debug("Reading from stdin...", process.argv);
       // Read data from stdin
       const jsonInput = await process.stdin.toArray();
 
@@ -74,7 +65,22 @@ async function main() {
       // Npm audit JSON input
       const parsedInput = JSON.parse(bufferStr);
 
-      console.log("Input: ", parsedInput);
+      switch (parsedInput.auditReportVersion) {
+        case 1: {
+          console.log("Audit v1 is not supported yet.");
+
+          break;
+        }
+        case 2: {
+          const report = generateReportV2(parsedInput);
+
+          // Generate HTML file using the report data
+          generateReportTemplateV2({ report, theme });
+          break;
+        }
+      }
+
+      process.exit(0);
     }
   } catch (error) {
     console.error("Error creating report: ", error);

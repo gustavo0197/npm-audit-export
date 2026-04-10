@@ -4,7 +4,7 @@ export default function getDirectIssues(report: ReportV2Type): ReportV2Type["vul
   const filteredReport: ReportV2Type["vulnerabilities"] = {};
 
   for (const key in report.vulnerabilities) {
-    if (report.vulnerabilities[key]?.isDirect) {
+    if (report.vulnerabilities[key]?.isDirect || report.vulnerabilities[key]?.effects.length === 0) {
       filteredReport[key] = report.vulnerabilities[key];
     }
   }
