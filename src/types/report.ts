@@ -3,7 +3,7 @@ export type ReportV2Type = {
   auditReportVersion: number;
   /** Vulnerabilities found in the project */
   vulnerabilities: {
-    [key: string]: VulnerabilityType;
+    [key: string]: VulnerabilityV2Type;
   };
   metadata: {
     /** Vulnerability counts by severity */
@@ -29,7 +29,7 @@ export type ReportV2Type = {
 
 export type SeverityType = "critical" | "high" | "moderate" | "low" | "info";
 
-type VulnerabilityType = {
+type VulnerabilityV2Type = {
   /** Name of the vulnerable package (Same as the key) e.g., "react" */
   name: string;
   /** Severity of the vulnerability */
@@ -37,7 +37,7 @@ type VulnerabilityType = {
   /** Is this vulnerability directly affecting your project */
   isDirect: boolean;
   /** This array contains information about how the vulnerability is introduced */
-  via: Array<string | VulnerabilityViaType>;
+  via: Array<string | VulnerabilityV2ViaType>;
   /** Dependencies on your project that rely on this vulnerable package */
   effects: string[];
   /** Range of versions affected. E.g., "<1.20.3" */
@@ -48,7 +48,7 @@ type VulnerabilityType = {
   fixAvailable: boolean;
 };
 
-export type VulnerabilityViaType = {
+export type VulnerabilityV2ViaType = {
   source: number;
   /** Dependency name */
   name: string;
@@ -71,4 +71,10 @@ export type VulnerabilityViaType = {
   };
   /** Range of versions affected. E.g., "<1.20.3" */
   range: string;
+};
+
+export type EnrichedDirectVulnerabilityV2Type = {
+  direct: VulnerabilityV2Type;
+  // All via paths flattened, each path is an array of strings (dependency names) ending with a VulnerabilityVia object
+  viaPaths: Array<Array<string | VulnerabilityV2ViaType>>;
 };

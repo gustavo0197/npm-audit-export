@@ -1,56 +1,40 @@
 import { type ReportV2Type } from "../../types/report.js";
+import { type VulnerabilityV2ViaType } from "../../types/report.js";
 
-/**
- * This function recursively finds all the "via" paths for a given vulnerability key.
- * @param param0
- * @returns
- */
-export default function findVias({ report, key, isParent }: Props): any[] {
-  // TODO: Define proper return type
-  const vulns: any[][] = [];
+export default function findVias({
+  report,
+  key,
+  isParent = true,
+}: Props): Array<Array<string | VulnerabilityV2ViaType>> {
+  const vulns: Array<Array<string | VulnerabilityV2ViaType>> = [];
 
   if (!report.vulnerabilities[key]) {
     return [];
   }
 
-  for (let i = 0; i < report.vulnerabilities[key].via.length; i++) {
-    if (isParent) {
-      vulns.push([]);
+  const vulnerability = report.vulnerabilities[key];
+
+  for (let i = 0; i < vulnerability.via.length; i++) {
+    const path: Array<string | VulnerabilityV2ViaType> = isParent ? [] : [key];
+    const via = vulnerability.via[i];
+
+    if (typeof via === "object") {
+      // VulnerabilityVia object
+      path.push(via);
+      vulns.push(path);
+    } else if (typeof via === "string") {
+      // Another vulnerability key
+      const nestedPaths = findVias({ report, key: via, isParent: false });
+
+      for (const nestedPath of nestedPaths) {
+        vulns.push([...path, ...nestedPath]);
+      }
     } else {
-      vulns.push([key]);
-    }
-
-    const via = report.vulnerabilities[key].via[i];
-
-    switch (typeof via) {
-      // If via is an object, it's a VulnerabilityViaType
-      case "object": {
-        vulns[i]?.push(via);
-
-        break;
-      }
-      // If via is a string, it's another vulnerability key
-      case "string": {
-        const data = findVias({ report, key: via, isParent: false });
-
-        vulns[i]?.push(...data);
-
-        break;
-      }
-      default: {
-        console.warn("Unknown via type: ", {
-          type: typeof via,
-          via: via,
-        });
-      }
+      console.warn("Unknown via type:", typeof via, via);
     }
   }
 
-  if (isParent) {
-    return vulns.flat();
-  } else {
-    return vulns;
-  }
+  return vulns;
 }
 
 type Props = {

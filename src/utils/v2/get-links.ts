@@ -1,4 +1,4 @@
-import type { VulnerabilityViaType } from "../../types/report.js";
+import type { VulnerabilityV2ViaType } from "../../types/report.js";
 import type { LinkType } from "../../types/links.js";
 
 function getCVSSVersion(vectorString: string) {
@@ -7,7 +7,7 @@ function getCVSSVersion(vectorString: string) {
   return version;
 }
 
-export default function getLinks(vulnerability: VulnerabilityViaType): LinkType[] {
+export default function getLinks(vulnerability: VulnerabilityV2ViaType): LinkType[] {
   const links: LinkType[] = [];
 
   if (vulnerability.cwe.length > 0) {

@@ -1,25 +1,17 @@
-import Handlebars from "handlebars";
-import { type VulnerabilityViaType } from "../../types/report.js";
-import loadTemplate from "../common/load-template.js";
+import { type VulnerabilityV2ViaType, type EnrichedDirectVulnerabilityV2Type } from "../../types/report.js";
 import type { ThemeType } from "../../types/theme.js";
 import getLinks from "./get-links.js";
 import type { TemplateDependencyType } from "../../types/template.js";
-import getCurrentDate from "../common/get-current-date.js";
-import { LIGHT_THEME, DARK_THEME, BASE_CSS } from "../common/constants/theme.js";
-
-Handlebars.registerHelper("eq", function (a, b) {
-  return a === b;
-});
+import writeReport from "../common/write-report.js";
+import compileTemplate from "../common/hbs.js";
 
 export default function generateReportTemplateV2({
   report,
   theme,
 }: {
-  report: { [key: string]: VulnerabilityViaType[] };
+  report: EnrichedDirectVulnerabilityV2Type[];
   theme: ThemeType;
-}): string {
-  const date = getCurrentDate();
-  const template = loadTemplate();
+}): void {
   const counts = {
     critical: 0,
     high: 0,
@@ -29,64 +21,58 @@ export default function generateReportTemplateV2({
   };
   const dependencies: TemplateDependencyType[] = [];
 
-  for (const key in report) {
-    const vulnerabilities = report[key];
+  for (const entry of report) {
     const dependency: TemplateDependencyType = {
-      name: key,
+      name: entry.direct.name,
       vulnerabilities: [],
-      severity: "critical",
-      severityInitial: "C",
+      severity: entry.direct.severity,
+      severityInitial: entry.direct.severity[0]?.toUpperCase() || "C",
       totalIssues: "",
     };
 
-    if (!vulnerabilities || vulnerabilities.length === 0) {
+    if (entry.viaPaths.length === 0) {
       continue;
     }
 
-    for (const vulnerability of vulnerabilities) {
-      if (typeof vulnerability === "object") {
-        if (Array.isArray(vulnerability)) {
-          // If it's an array, the last item is the vulnerability object
-          const vuln = vulnerability[vulnerability.length - 1];
-
-          counts[vuln.severity as keyof typeof counts]++;
-
-          dependency.vulnerabilities.push({
-            title: vuln.title,
-            severity: vuln.severity,
-            severityInitial: vuln.severity[0]?.toUpperCase(),
-            package: vulnerability[0],
-            links: getLinks(vuln),
-          });
-        } else {
-          counts[vulnerability.severity as keyof typeof counts]++;
+    for (const path of entry.viaPaths) {
+      if (path.length === 0) {
+        // If is empty skip this entry
+        continue;
+      } else if (path.length === 1) {
+        // If there is only 1 item, it most likely be an object
+        if (typeof path[0] === "object") {
+          counts[path[0].severity as keyof typeof counts]++;
 
           dependency.vulnerabilities.push({
-            title: vulnerability.title,
-            severity: vulnerability.severity,
-            severityInitial: vulnerability.severity[0]?.toUpperCase() || "",
-            links: getLinks(vulnerability),
+            title: path[0].title,
+            severity: path[0].severity,
+            severityInitial: path[0].severity.charAt(0).toUpperCase(),
+            links: getLinks(path[0]),
           });
         }
+      } else {
+        // Last item is an object, all other items are strings ["package-1", "package-2", "package-3", Vulnerability Object]
 
-        counts.total++;
+        const vuln = path[path.length - 1] as VulnerabilityV2ViaType;
+
+        counts[vuln.severity as keyof typeof counts]++;
+
+        dependency.vulnerabilities.push({
+          title: vuln.title,
+          severity: vuln.severity,
+          severityInitial: vuln.severity.charAt(0).toUpperCase(),
+          links: getLinks(vuln),
+          package: `${vuln.name}@${vuln.range}`,
+        });
       }
+
+      counts.total++;
     }
 
     dependencies.push(dependency);
   }
 
-  // Compile the template
-  const hbsTemplate = Handlebars.compile(template);
+  const html = compileTemplate({ counts, dependencies, theme });
 
-  const html = hbsTemplate({
-    counts,
-    theme,
-    dependencies,
-    date,
-    baseCss: BASE_CSS,
-    themeCss: theme === "light" ? LIGHT_THEME : DARK_THEME,
-  });
-
-  return html;
+  writeReport(html);
 }

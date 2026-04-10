@@ -16,3 +16,11 @@ export type TemplateVulnerabilityType = {
   links: LinkType[];
   package?: string;
 };
+
+export type VulnerabilitiesCountType = {
+  critical: number;
+  high: number;
+  moderate: number;
+  low: number;
+  total: number;
+};

@@ -1,10 +1,10 @@
 import { describe, test, expect } from "vitest";
 import getLinks from "./get-links.js";
-import type { VulnerabilityViaType } from "../../types/report.js";
+import type { VulnerabilityV2ViaType } from "../../types/report.js";
 import type { LinkType } from "../../types/links.js";
 
 // Helper function to create a base vulnerability object with sensible defaults
-const createVulnerability = (overrides: Partial<VulnerabilityViaType> = {}): VulnerabilityViaType => ({
+const createVulnerability = (overrides: Partial<VulnerabilityV2ViaType> = {}): VulnerabilityV2ViaType => ({
   source: 1234,
   name: "test-package",
   dependency: "test-dependency",

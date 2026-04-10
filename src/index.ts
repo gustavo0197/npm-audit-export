@@ -1,8 +1,8 @@
 import loadReportFile from "./utils/common/load-report-file.js";
 import generateReportV2 from "./utils/v2/index.js";
 import generateReportTemplateV2 from "./utils/v2/generate-report-template.js";
-import writeReport from "./utils/common/write-report.js";
 import type { ThemeType } from "./types/theme.js";
+import { writeFileSync } from "fs";
 const VALID_THEMES = ["light", "dark"];
 
 async function main() {
@@ -51,11 +51,9 @@ async function main() {
         }
         case 2: {
           const report = generateReportV2(parsedInput);
-          // console.log("Generated report: ", report["body-parser"]);
 
-          // TODO: Generate HTML file using the report data
-          const html = generateReportTemplateV2({ report, theme });
-          writeReport(html);
+          // Generate HTML file using the report data
+          generateReportTemplateV2({ report, theme });
 
           break;
         }

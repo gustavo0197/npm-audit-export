@@ -1,9 +1,9 @@
 import { describe, test, expect } from "vitest";
 import getDirectIssues from "./get-direct-issues.js";
-import type { ReportV2Type, SeverityType, VulnerabilityViaType } from "../../types/report.js";
+import type { ReportV2Type, SeverityType, VulnerabilityV2ViaType } from "../../types/report.js";
 
 // Helper function to create a vulnerability via object with sensible defaults
-const createVulnerabilityVia = (overrides: Partial<VulnerabilityViaType> = {}): VulnerabilityViaType => ({
+const createVulnerabilityVia = (overrides: Partial<VulnerabilityV2ViaType> = {}): VulnerabilityV2ViaType => ({
   source: 1234,
   name: "test-package",
   dependency: "test-dependency",
