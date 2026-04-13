@@ -53,7 +53,15 @@
             <div>
               <div class="severity-icon severity-box--{{this.severity}}">{{this.severityInitial}}</div>
 
-              <h2 class="title">{{this.name}}</h2>
+              <div class="dependency__title">
+                <h2 class="title">{{this.name}}</h2>
+
+                {{#if this.isDirect}}
+                  <p class="lozenge lozenge--danger">
+                    DIRECT VULNERABILITY
+                  </p>
+                {{/if}}
+              </div>
               <p class="dependency__header__total-issues">{{this.totalIssues}}</p>
             </div>
           </div>

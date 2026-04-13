@@ -28,6 +28,7 @@ export default function generateReportTemplateV2({
       severity: entry.direct.severity,
       severityInitial: entry.direct.severity[0]?.toUpperCase() || "C",
       totalIssues: "",
+      isDirect: entry.direct.isDirect,
     };
 
     if (entry.viaPaths.length === 0) {

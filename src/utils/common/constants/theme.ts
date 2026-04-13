@@ -93,6 +93,11 @@ a {
   margin: 0;
   font-size: 14px;
 }
+.dependency__header .dependency__title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 .dependency__body {
   padding: 24px;
 }
@@ -149,6 +154,14 @@ a {
 }
 .vulnerability__links a + a {
   border-left: 1px solid transparent;
+}
+.lozenge {
+  border: none;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 2px 4px;
+  display: inline-block;
 }
 `;
 
@@ -228,6 +241,10 @@ export const LIGHT_THEME = `
 .vulnerability__links a + a {
   border-color: #0b120e24;
 }
+.theme--light .lozenge--danger {
+  background-color: #F87168;
+  color: #292A2E;
+}
 `;
 
 export const DARK_THEME = `
@@ -304,5 +321,9 @@ export const DARK_THEME = `
 }
 .vulnerability__links a + a {
   border-color: #e3e4f21f;
+}
+.theme--dark .lozenge--danger {
+  background-color: #FD9891;
+  color: #292A2E;
 }
 `;

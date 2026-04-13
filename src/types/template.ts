@@ -7,6 +7,7 @@ export type TemplateDependencyType = {
   severity: SeverityType;
   severityInitial: string;
   totalIssues: string;
+  isDirect: boolean;
 };
 
 export type TemplateVulnerabilityType = {
