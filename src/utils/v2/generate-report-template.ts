@@ -35,39 +35,56 @@ export default function generateReportTemplateV2({
       continue;
     }
 
+    // Track unique vulnerability sources within this dependency to avoid duplicates
+    const seenSources = new Set<number>();
+
     for (const path of entry.viaPaths) {
       if (path.length === 0) {
         // If is empty skip this entry
         continue;
-      } else if (path.length === 1) {
+      }
+
+      // Extract vulnerability object based on path length
+      let vuln: VulnerabilityV2ViaType | null = null;
+
+      if (path.length === 1) {
         // If there is only 1 item, it most likely be an object
         if (typeof path[0] === "object") {
-          counts[path[0].severity as keyof typeof counts]++;
-
-          dependency.vulnerabilities.push({
-            title: path[0].title,
-            severity: path[0].severity,
-            severityInitial: path[0].severity.charAt(0).toUpperCase(),
-            links: getLinks(path[0]),
-          });
+          vuln = path[0] as VulnerabilityV2ViaType;
         }
       } else {
         // Last item is an object, all other items are strings ["package-1", "package-2", "package-3", Vulnerability Object]
-
-        const vuln = path[path.length - 1] as VulnerabilityV2ViaType;
-
-        counts[vuln.severity as keyof typeof counts]++;
-
-        dependency.vulnerabilities.push({
-          title: vuln.title,
-          severity: vuln.severity,
-          severityInitial: vuln.severity.charAt(0).toUpperCase(),
-          links: getLinks(vuln),
-          package: `${vuln.name}@${vuln.range}`,
-        });
+        vuln = path[path.length - 1] as VulnerabilityV2ViaType;
       }
 
+      if (!vuln) {
+        continue;
+      }
+
+      // Skip if we've already seen this vulnerability source within this dependency
+      if (seenSources.has(vuln.source)) {
+        continue;
+      }
+
+      // Add to seen sources
+      seenSources.add(vuln.source);
+
+      counts[vuln.severity as keyof typeof counts]++;
       counts.total++;
+
+      const vulnerabilityEntry = {
+        title: vuln.title,
+        severity: vuln.severity,
+        severityInitial: vuln.severity.charAt(0).toUpperCase(),
+        links: getLinks(vuln),
+      };
+
+      // Add package info only for transitive vulnerabilities (path length > 1)
+      if (path.length > 1) {
+        (vulnerabilityEntry as any).package = `${vuln.name}@${vuln.range}`;
+      }
+
+      dependency.vulnerabilities.push(vulnerabilityEntry);
     }
 
     dependencies.push(dependency);
