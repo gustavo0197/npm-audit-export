@@ -245,6 +245,10 @@ export const LIGHT_THEME = `
   background-color: #F87168;
   color: #292A2E;
 }
+.theme--light .lozenge--warning {
+  background-color: #FCA700;
+  color: #292A2E;
+}
 `;
 
 export const DARK_THEME = `
@@ -324,6 +328,10 @@ export const DARK_THEME = `
 }
 .theme--dark .lozenge--danger {
   background-color: #FD9891;
+  color: #292A2E;
+}
+.theme--dark .lozenge--warning {
+  background-color: #FBC828;
   color: #292A2E;
 }
 `;

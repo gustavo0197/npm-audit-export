@@ -60,6 +60,8 @@
                   <p class="lozenge lozenge--danger">
                     DIRECT VULNERABILITY
                   </p>
+                {{else}}
+                  <p class="lozenge lozenge--warning">TRANSITIVE VULNERABILITY</p>
                 {{/if}}
               </div>
               <p class="dependency__header__total-issues">{{this.totalIssues}}</p>
