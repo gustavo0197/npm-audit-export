@@ -35,11 +35,13 @@ a {
   margin: 0;
 }
 .vulnerabilities-count {
-  display: flex;
   gap: 16px;
   margin-bottom: 32px;
-  justify-content: center;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.vulnerability-count:nth-child(5) {
+  grid-column: 1/3;
 }
 .vulnerability-count {
   padding: 16px 24px;
@@ -49,7 +51,6 @@ a {
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  width: 120px;
 }
 .vulnerability-count p:nth-child(2) {
   font-size: 14px;
@@ -59,6 +60,7 @@ a {
   border-radius: 4px;
   font-weight: bold;
 }
+
 .dependency__box {
   margin-bottom: 16px;
   border-radius: 4px;
@@ -98,14 +100,26 @@ a {
   align-items: center;
   justify-content: space-between;
 }
+.dependency__title .title {
+  font-size: 20px;
+}
+.lozenge {
+  border: none;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: bold;
+  padding: 2px 4px;
+  display: inline-block;
+}
+
 .dependency__body {
-  padding: 24px;
+  padding: 16px;
 }
 .dependency__vulnerabilities {
   border: 1px solid transparent;
 }
 .dependency__vulnerability {
-  padding: 6px 16px;
+  padding: 6px 12px;
 }
 .dependency__vulnerability + .dependency__vulnerability {
   border-top: 0.5px solid transparent;
@@ -113,19 +127,22 @@ a {
 .vulnerability {
   display: flex;
   justify-content: space-between;
+  flex-direction: column;
+  gap: 6px;
 }
 .vulnerability__description {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 8px;
+  font-size: 14px;
 }
 .vulnerability__description p + p {
   font-size: 12px;
 }
 .vulnerability__description span {
   border: 1px solid transparent;
-  font-size: 11px;
+  font-size: 10px;
   padding: 1px 4px;
   border-radius: 8px;
   font-weight: 600;
@@ -147,7 +164,7 @@ a {
 }
 .vulnerability__links a {
   padding: 0 4px;
-  font-size: 12px;
+  font-size: 11px;
 }
 .vulnerability__links a:hover {
   text-decoration: underline;
@@ -155,13 +172,58 @@ a {
 .vulnerability__links a + a {
   border-left: 1px solid transparent;
 }
-.lozenge {
-  border: none;
-  border-radius: 4px;
-  font-size: 12px;
-  font-weight: bold;
-  padding: 2px 4px;
-  display: inline-block;
+
+@media (min-width: 481px) {
+}
+
+@media (min-width: 769px) {
+  .vulnerabilities-count {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .vulnerability-count {
+    width: 120px;
+  }
+
+  .dependency__title .title {
+    font-size: 24px;
+  }
+  .lozenge {
+    font-size: 12px;
+  }
+
+  .dependency__body {
+    padding: 24px;
+  }
+
+  .dependency__vulnerability {
+    padding: 8px 16px;
+  }
+  .vulnerability {
+    flex-direction: row;
+  }
+  .vulnerability__description {
+    font-size: 16px;
+  }
+  .vulnerability__description span {
+    font-size: 11px;
+  }
+  .vulnerability__links a {
+    font-size: 12px;
+  }
+}
+
+@media (min-width: 1025px) {
+
+
+
+
+
+
+
+
+
 }
 `;
 

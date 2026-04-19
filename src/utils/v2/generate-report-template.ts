@@ -20,6 +20,7 @@ export default function generateReportTemplateV2({
     total: 0,
   };
   const dependencies: TemplateDependencyType[] = [];
+  const globalSources = new Set<number>();
 
   for (const entry of report) {
     const dependency: TemplateDependencyType = {
@@ -36,7 +37,7 @@ export default function generateReportTemplateV2({
     }
 
     // Track unique vulnerability sources within this dependency to avoid duplicates
-    const seenSources = new Set<number>();
+    const sourcesInEntry = new Set<number>();
 
     for (const path of entry.viaPaths) {
       if (path.length === 0) {
@@ -62,15 +63,21 @@ export default function generateReportTemplateV2({
       }
 
       // Skip if we've already seen this vulnerability source within this dependency
-      if (seenSources.has(vuln.source)) {
+      if (sourcesInEntry.has(vuln.source)) {
         continue;
       }
 
-      // Add to seen sources
-      seenSources.add(vuln.source);
+      // Add to global sources
+      if (!globalSources.has(vuln.source)) {
+        globalSources.add(vuln.source);
 
-      counts[vuln.severity as keyof typeof counts]++;
-      counts.total++;
+        // Count vulnerabilities
+        counts[vuln.severity as keyof typeof counts]++;
+        counts.total++;
+      }
+
+      // Add to seen sources
+      sourcesInEntry.add(vuln.source);
 
       const vulnerabilityEntry = {
         title: vuln.title,
