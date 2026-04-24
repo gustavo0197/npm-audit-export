@@ -106,10 +106,12 @@ a {
 .lozenge {
   border: none;
   border-radius: 4px;
-  font-size: 10px;
+  font-size: 9px;
   font-weight: bold;
   padding: 2px 4px;
   display: inline-block;
+  width: min-content;
+  white-space: nowrap;
 }
 
 .dependency__body {
@@ -131,14 +133,16 @@ a {
   gap: 6px;
 }
 .vulnerability__description {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: 18px 1fr;
   align-items: center;
-  gap: 8px;
+  column-gap: 8px;
+  row-gap: 4px;
   font-size: 14px;
 }
 .vulnerability__description p + p {
-  font-size: 12px;
+  font-size: 10px;
+  text-align: end;
 }
 .vulnerability__description span {
   border: 1px solid transparent;
@@ -146,6 +150,7 @@ a {
   padding: 1px 4px;
   border-radius: 8px;
   font-weight: 600;
+  width: fit-content;
 }
 .vulnerability__description .severity-icon {
   width: 18px;
@@ -171,9 +176,6 @@ a {
 }
 .vulnerability__links a + a {
   border-left: 1px solid transparent;
-}
-
-@media (min-width: 481px) {
 }
 
 @media (min-width: 769px) {
@@ -205,8 +207,14 @@ a {
   }
   .vulnerability__description {
     font-size: 16px;
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
   }
   .vulnerability__description span {
+    font-size: 11px;
+  }
+  .vulnerability__description p + p {
     font-size: 11px;
   }
   .vulnerability__links a {
@@ -214,17 +222,7 @@ a {
   }
 }
 
-@media (min-width: 1025px) {
-
-
-
-
-
-
-
-
-
-}
+@media (min-width: 1025px) {}
 `;
 
 export const LIGHT_THEME = `
